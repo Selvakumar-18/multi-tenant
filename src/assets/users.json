@@ -1,0 +1,26 @@
+[
+  {
+    "email": "kavin@yopamil.com",
+    "password": "kavin@123",
+    "tenantType": "tenant1",
+    "role": "admin"
+  },
+  {
+    "email": "selvaone@yopamil.com",
+    "password": "selva@123",
+    "tenantType": "tenant1",
+    "role": "user"
+  },
+  {
+    "email": "virat@yopamil.com",
+    "password": "virat@123",
+    "tenantType": "tenant2",
+    "role": "admin"
+  },{
+    "email": "gill@yopamil.com",
+    "password": "gill@123",
+    "tenantType": "tenant2",
+    "role": "user"
+
+  }
+]

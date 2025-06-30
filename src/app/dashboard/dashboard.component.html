@@ -1,0 +1,19 @@
+<div class="dashboard-header"  *ngIf="false">
+  <div class="user-info">
+    <strong>{{ getUser?.email }}</strong> ({{ getUser?.role | titlecase }})
+  </div>
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</div>
+
+
+<div class="dashboard-container">
+  <div class="card" *ngIf="getUser?.role === 'admin' || getUser?.role === 'user'">
+    <h2>Card 1 - General Info</h2>
+    <p>This is visible to both Admin and User.</p>
+  </div>
+
+  <div class="card" *ngIf="getUser?.role === 'admin'">
+    <h2>Card 2 - Admin Info</h2>
+    <p>This is only visible to Admin users.</p>
+  </div>
+</div>

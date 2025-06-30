@@ -1,0 +1,19 @@
+<div class="layout-container">
+  <aside class="side-nav">
+    <div class="user-info">
+      <strong>{{ getUser?.email }}</strong>
+      <div class="role">{{ getUser?.role | titlecase }}</div>
+    </div>
+
+    <nav class="nav-links">
+      <a routerLink="/side/dashboard">Dashboard</a>
+      <a routerLink="/side/admin">Admin</a>
+    </nav>
+
+    <button (click)="logout()">Logout</button>
+  </aside>
+
+  <main class="layout-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
