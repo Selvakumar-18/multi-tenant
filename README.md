@@ -36,6 +36,8 @@ multi-tenant/
 ├── firebase.json                 # Firebase multi-site hosting config
 ├── .firebaserc                   # Firebase target mapping
 
+---
+
 **##User Data**
 [
   {
