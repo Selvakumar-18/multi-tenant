@@ -1,27 +1,65 @@
-# MultiTenant
+# Multi-Tenant Role-Based Angular Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+A scalable Angular 16 application designed for **multi-tenant architecture** using subdomain-based deployment, custom layout and theme per tenant, and **role-based access control**. Hosted on **Firebase** with isolated configurations per tenant.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+##  Features
 
-## Code scaffolding
+- **Role-Based Access Control (RBAC)**: Admin and User roles with route protection.
+-  **Subdomain-based Tenant Hosting**: Each tenant has its own Firebase Hosting site (e.g. `tenant1.web.app`, `tenant2.web.app`).
+-  **Per-Tenant Customizations**:
+  - Logo
+  - Theme (Primary/Secondary colors)
+  - Layout (Side/Top)
+-  Smart Session Storage using `localStorage`
+-  Guarded Admin routes (`AdminAuthGuard`)
+-  Basic Unit Testing with Angular TestBed
+-  Firebase Hosting via deployment targets
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## Folder Structure
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+multi-tenant/
+├── src/
+│   ├── app/
+│   │   ├── login/                # Login Component
+│   │   ├── dashboard/            # Common dashboard for users
+│   │   ├── admin/                # Admin-only routes
+│   │   ├── guards/               # Route guards
+│   │   ├── layouts/              # TopLayout and SideLayout
+│   │   ├── layout-selector/      # Redirects based on layout
+│   │   └── app-routing.module.ts
+│   ├── assets/users.json         # Mock user data with tenant info
+├── firebase.json                 # Firebase multi-site hosting config
+├── .firebaserc                   # Firebase target mapping
 
-## Running unit tests
+**##User Data**
+[
+  {
+    "email": "kavin@yopamil.com",
+    "password": "kavin@123",
+    "tenantType": "tenant1",
+    "role": "admin"
+  },
+  {
+    "email": "selvaone@yopamil.com",
+    "password": "selva@123",
+    "tenantType": "tenant1",
+    "role": "user"
+  },
+  {
+    "email": "virat@yopamil.com",
+    "password": "virat@123",
+    "tenantType": "tenant2",
+    "role": "admin"
+  },{
+    "email": "gill@yopamil.com",
+    "password": "gill@123",
+    "tenantType": "tenant2",
+    "role": "user"
+  }
+]
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
