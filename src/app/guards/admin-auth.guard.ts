@@ -10,10 +10,11 @@ export class AdminAuthGuard implements CanActivate {
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
   canActivate(): boolean | UrlTree {
-    const userData = localStorage.getItem('user');
-    const user = userData ? JSON.parse(userData) : null;
+    const sessionData = localStorage.getItem('session');
+    const currentTenant = localStorage.getItem('currentTenant');
+    const user = sessionData ? JSON.parse(sessionData) : null;
 
-    if (user && user.role === 'admin') {
+    if (user && user.role === 'admin' && user.tenant === currentTenant) {
       return true;
     }
 

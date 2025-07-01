@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./layout-selector.component.css']
 })
 export class LayoutSelectorComponent {
- constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user.layout === 'side') {
+    const session = JSON.parse(localStorage.getItem('session') || '{}');
+
+    if (session.layout === 'side') {
       this.router.navigate(['/side/dashboard']);
-    } else if (user.layout === 'top') {
+    } else if (session.layout === 'top') {
       this.router.navigate(['/top/dashboard']);
     } else {
       this.router.navigate(['/login']);

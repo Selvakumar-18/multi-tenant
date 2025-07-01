@@ -1,17 +1,47 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { AdminAuthGuard } from './admin-auth.guard';
+import { Router } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { adminAuthGuard } from './admin-auth.guard';
-
-describe('adminAuthGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => adminAuthGuard(...guardParameters));
+describe('AdminAuthGuard', () => {
+  let guard: AdminAuthGuard;
+  let routerSpy: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    routerSpy = jasmine.createSpyObj('Router', ['parseUrl']);
+
+    TestBed.configureTestingModule({
+      imports: [MatSnackBarModule],
+      providers: [
+        AdminAuthGuard,
+        { provide: Router, useValue: routerSpy }
+      ]
+    });
+
+    guard = TestBed.inject(AdminAuthGuard);
   });
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('should allow access for admin user', () => {
+    localStorage.setItem('session', JSON.stringify({ role: 'admin' }));
+    const result = guard.canActivate();
+    expect(result).toBeTrue();
+  });
+
+  it('should redirect non-admin user to dashboard', () => {
+    localStorage.setItem('session', JSON.stringify({ role: 'user' }));
+    const result = guard.canActivate();
+    expect(routerSpy.parseUrl).toHaveBeenCalledWith('/dashboard');
+    expect(result.toString()).toBe('/dashboard');
+  });
+
+  it('should redirect unauthenticated user to login', () => {
+    const result = guard.canActivate();
+    expect(routerSpy.parseUrl).toHaveBeenCalledWith('/login');
+    expect(result.toString()).toBe('/login');
   });
 });
+

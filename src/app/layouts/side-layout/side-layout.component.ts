@@ -13,14 +13,14 @@ export class SideLayoutComponent {
 
   constructor(private router: Router, private dialog: MatDialog) { }
   ngOnInit() {
-    this.getUser = JSON.parse(localStorage.getItem('user') || '{}');
+    this.getUser = JSON.parse(localStorage.getItem('session') || '{}');
     document.documentElement.style.setProperty('--primary-color', this.getUser.theme.primary);
     document.documentElement.style.setProperty('--secondary-color', this.getUser.theme.secondary);
 
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('session');
      this.router.navigate(['/login']);
   }
 }

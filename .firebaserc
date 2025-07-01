@@ -1,0 +1,19 @@
+{
+  "projects": {
+    "default": "multi-tenant-app-tenant1",
+    "tenant2": "multi-tenant-app-tenant2"
+  },
+  "targets": {
+    "multi-tenant-app-tenant2": {
+      "hosting": {
+        "tenant1": [
+          "multi-tenant-app-tenant1"
+        ],
+        "tenant2": [
+          "multi-tenant-app-tenant2"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

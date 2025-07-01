@@ -31,14 +31,27 @@ export class LoginComponent {
   }
 
   loginData(): void {
-    let email = this.loginForm.get('email')?.value;
-    let password = this.loginForm.get('password')?.value;
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
     this.http.get<any[]>('assets/users.json').subscribe(users => {
       const user = users.find(u => u.email === email && u.password === password);
 
       if (user) {
+        const currentTenant = localStorage.getItem('currentTenant');
+        console.log('Detected tenant from domain:', currentTenant);
+        console.log('User tenant type:', user.tenantType);
+
+        if (user.tenantType !== currentTenant) {
+          this.snackBar.open('Access denied for this tenant URL!', 'X', {
+            duration: 3000,
+            panelClass: 'snack-error'
+          });
+          return;
+        }
+
         const tenantConfig = TENANT_SETTINGS[user.tenantType];
-        localStorage.setItem('user', JSON.stringify({
+        const session = {
           email: user.email,
           role: user.role,
           tenant: user.tenantType,
@@ -48,12 +61,17 @@ export class LoginComponent {
           },
           layout: tenantConfig.layout,
           logo: tenantConfig.logo
-        }));
+        };
+
+        localStorage.setItem('session', JSON.stringify(session));
+
         this.snackBar.open('Login Successful!', 'X', {
           duration: 3000,
           panelClass: 'snack-success'
         });
+
         this.router.navigate(['/layout']);
+
       } else {
         this.snackBar.open('Invalid credentials!', 'X', {
           duration: 3000,
@@ -61,6 +79,6 @@ export class LoginComponent {
         });
       }
     });
-
   }
+
 }
